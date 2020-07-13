@@ -1,26 +1,26 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "知识图谱-716所",
+    "title": "test_swagger",
     "version": "last"
   },
   "basePath": "/",
   "tags": [
     {
-      "name": "infer",
-      "description": "infer"
+      "name": "business",
+      "description": "business description"
     },
     {
-      "name": "fusion",
-      "description": "desc"
+      "name": "knowledge",
+      "description": "knowledgedesc"
     }
   ],
   "schemes": ["http"],
   "paths": {
-    "/infer/relation": {
+    "/business/create": {
       "post": {
-        "tags": ["infer"],
-        "summary": "创建关系推理任务",
+        "tags": ["business"],
+        "summary": "create_business",
         "description": "",
         "consumes": ["application/json"],
         "parameters": [
@@ -28,7 +28,7 @@
             "name": "root",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/InferRelationParams"
+              "$ref": "#/definitions/BusinessCreateParams"
             }
           }
         ],
@@ -37,18 +37,16 @@
             "description": "successful operation",
             "schema": {
               "type": "object",
-              "title": "empty object",
+              "title": "title",
               "properties": {
                 "code": {
-                  "type": "string",
-                  "description": "0000：创建成功\n29999：创建失败"
+                  "type": "number"
                 },
                 "msg": {
-                  "type": "string",
-                  "description": "错误提示信息"
+                  "type": "string"
                 },
                 "data": {
-                  "$ref": "#/definitions/ResInferRelation"
+                  "$ref": "#/definitions/ResBusinessCreate"
                 }
               },
               "required": ["code", "msg", "data"]
@@ -57,138 +55,17 @@
         }
       }
     },
-    "/fusion/entity": {
-      "post": {
-        "tags": ["fusion"],
-        "summary": "创建实体融合任务",
-        "description": "",
-        "consumes": ["application/json"],
-        "parameters": [
-          {
-            "name": "root",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FusionEntityParams"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "title": "empty object",
-              "properties": {
-                "code": {
-                  "type": "string",
-                  "description": "0000：融合任务创建成功\n29999：融合任务创建失败"
-                },
-                "msg": {
-                  "type": "string",
-                  "description": "错误提示信息，如果成功则为空"
-                },
-                "data": {
-                  "$ref": "#/definitions/ResFusionEntity"
-                }
-              },
-              "required": ["code", "msg", "data"]
-            }
-          }
-        }
-      }
-    },
-    "/fusion/graph": {
-      "post": {
-        "tags": ["fusion"],
-        "summary": "创建融合图谱",
-        "description": "",
-        "consumes": ["application/json"],
-        "parameters": [
-          {
-            "name": "root",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FusionGraphParams"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "title": "empty object",
-              "properties": {
-                "code": {
-                  "type": "string",
-                  "description": "0000:成功 \n29999:失败"
-                },
-                "msg": {
-                  "type": "string",
-                  "description": "错误提示"
-                },
-                "data": {
-                  "$ref": "#/definitions/ResFusionGraph"
-                }
-              },
-              "required": ["code", "msg", "data"]
-            }
-          }
-        }
-      }
-    },
-    "/infer/graph": {
-      "post": {
-        "tags": ["infer"],
-        "summary": "更新推理图谱",
-        "description": "",
-        "consumes": ["application/json"],
-        "parameters": [
-          {
-            "name": "root",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/InferGraphParams"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "title": "empty object",
-              "properties": {
-                "code": {
-                  "type": "string",
-                  "description": "0000:成功 \n29999:失败"
-                },
-                "msg": {
-                  "type": "string",
-                  "description": "错误提示"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "required": ["code", "msg", "data"]
-            }
-          }
-        }
-      }
-    },
-    "/infer/relation/{taskid}": {
+    "/business/delete": {
       "get": {
-        "tags": ["infer"],
-        "summary": "查询关系推理任务",
+        "tags": ["business"],
+        "summary": "delete",
         "description": "",
         "parameters": [
           {
-            "name": "taskid",
-            "in": "path",
+            "name": "id",
+            "in": "query",
+            "required": true,
             "description": "",
-            "required": true,
             "type": "string"
           }
         ],
@@ -196,147 +73,49 @@
           "200": {
             "description": "successful operation",
             "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
-              "title": "empty object",
               "properties": {
                 "code": {
-                  "type": "string",
-                  "description": "0000:查询成功\n29999: 查询失败"
+                  "type": "number"
                 },
                 "msg": {
-                  "type": "string",
-                  "description": "错误提示信息"
+                  "type": "string"
                 },
                 "data": {
-                  "type": "object",
-                  "properties": {
-                    "progess": {
-                      "type": "number",
-                      "description": "进度0 -100"
-                    },
-                    "infer_relations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "degree": {
-                            "type": "number",
-                            "description": "推理层数"
-                          },
-                          "new_relation": {
-                            "type": "object",
-                            "properties": {
-                              "subject": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "code": {
-                                    "type": "string"
-                                  },
-                                  "label": {
-                                    "type": "string"
-                                  },
-                                  "id": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": ["name", "code", "label", "id"]
-                              },
-                              "object": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "code": {
-                                    "type": "string"
-                                  },
-                                  "label": {
-                                    "type": "string"
-                                  },
-                                  "id": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": ["name", "code", "label", "id"]
-                              },
-                              "predict": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["subject", "object", "predict"],
-                            "description": "新关系"
-                          },
-                          "basic": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "subject": {
-                                  "type": "object",
-                                  "properties": {
-                                    "code": {
-                                      "type": "string"
-                                    },
-                                    "name": {
-                                      "type": "string"
-                                    },
-                                    "lebel": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "required": ["code", "name", "lebel"]
-                                },
-                                "object": {
-                                  "type": "object",
-                                  "properties": {
-                                    "code": {
-                                      "type": "string"
-                                    },
-                                    "name": {
-                                      "type": "string"
-                                    },
-                                    "label": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "required": ["code", "name", "label"]
-                                },
-                                "predict": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["subject", "object", "predict"]
-                            },
-                            "description": "推理依据"
-                          }
-                        },
-                        "required": ["degree", "basic", "new_relation"]
-                      }
-                    }
-                  },
-                  "required": ["progess", "infer_relations"]
+                  "type": "null"
                 }
-              },
-              "required": ["code", "msg", "data"]
+              }
             }
           }
         }
       }
     },
-    "/fusion/entity/{taskid}": {
+    "/business/list": {
       "get": {
-        "tags": ["fusion"],
-        "summary": "查询实体融合任务",
+        "tags": ["business"],
+        "summary": "list",
         "description": "",
         "parameters": [
           {
-            "name": "taskid",
-            "in": "path",
-            "description": "任务id",
+            "name": "page_num",
+            "in": "query",
             "required": true,
+            "description": "页码",
+            "type": "string"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "description": "分页行数",
+            "type": "string"
+          },
+          {
+            "name": "word",
+            "in": "query",
+            "required": true,
+            "description": "搜索内容",
             "type": "string"
           }
         ],
@@ -344,126 +123,84 @@
           "200": {
             "description": "successful operation",
             "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
-              "title": "empty object",
               "properties": {
                 "code": {
-                  "type": "string",
-                  "description": "0000:查询成功\n29999:查询失败"
+                  "type": "number"
                 },
                 "msg": {
-                  "type": "string",
-                  "description": "错误提示信息"
+                  "type": "string"
                 },
                 "data": {
-                  "type": "object",
-                  "properties": {
-                    "progress": {
-                      "type": "number",
-                      "description": "进度，0-100"
-                    },
-                    "fusion_entities": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "entity_a": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "wihich_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["name", "code", "wihich_graph"]
-                          },
-                          "entity_b": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "which_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "name",
-                              "code",
-                              "which_graph",
-                              "property"
-                            ]
-                          },
-                          "fusion_entity": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "which_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "name",
-                              "code",
-                              "which_graph",
-                              "property"
-                            ]
-                          },
-                          "unit": {
-                            "type": "object",
-                            "properties": {},
-                            "description": "Json对象，key是property，value是单位\n\n0:无, 1: 质量/kg, 2: 长度/m,  3: 面积/m2, 4: 速度/km/s, 5: 价格/USD 6: 时间/h\n"
-                          }
-                        },
-                        "required": [
-                          "entity_a",
-                          "entity_b",
-                          "fusion_entity",
-                          "unit"
-                        ]
-                      }
-                    }
-                  },
-                  "required": ["progress", "fusion_entities"]
+                  "$ref": "#/definitions/ResBusinessList"
                 }
-              },
-              "required": ["code", "msg", "data"]
+              }
             }
           }
         }
-      },
+      }
+    },
+    "/knowledge/post_empty": {
       "post": {
-        "tags": ["fusion"],
-        "summary": "",
+        "tags": ["knowledge"],
+        "summary": "测试post空接口",
+        "description": "",
+        "consumes": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/get_empty": {
+      "get": {
+        "tags": ["knowledge"],
+        "summary": "测试空接口",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {}
+          }
+        }
+      }
+    },
+    "/knowledge/detail/:id": {
+      "get": {
+        "tags": ["knowledge"],
+        "summary": "综合接口",
         "description": "",
         "parameters": [
           {
-            "name": "taskid",
+            "name": "id",
             "in": "path",
-            "description": "任务id",
+            "description": "图谱id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "description": "名称",
             "type": "string"
           }
         ],
@@ -471,112 +208,19 @@
           "200": {
             "description": "successful operation",
             "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
-              "title": "empty object",
               "properties": {
                 "code": {
-                  "type": "string",
-                  "description": "0000:查询成功\n29999:查询失败"
+                  "type": "number"
                 },
                 "msg": {
-                  "type": "string",
-                  "description": "错误提示信息"
+                  "type": "string"
                 },
                 "data": {
-                  "type": "object",
-                  "properties": {
-                    "progress": {
-                      "type": "number",
-                      "description": "进度，0-100"
-                    },
-                    "fusion_entities": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "entity_a": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "wihich_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["name", "code", "wihich_graph"]
-                          },
-                          "entity_b": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "which_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "name",
-                              "code",
-                              "which_graph",
-                              "property"
-                            ]
-                          },
-                          "fusion_entity": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "code": {
-                                "type": "string"
-                              },
-                              "which_graph": {
-                                "type": "string"
-                              },
-                              "property": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "name",
-                              "code",
-                              "which_graph",
-                              "property"
-                            ]
-                          },
-                          "unit": {
-                            "type": "object",
-                            "properties": {},
-                            "description": "Json对象，key是property，value是单位\n\n0:无, 1: 质量/kg, 2: 长度/m,  3: 面积/m2, 4: 速度/km/s, 5: 价格/USD 6: 时间/h\n"
-                          }
-                        },
-                        "required": [
-                          "entity_a",
-                          "entity_b",
-                          "fusion_entity",
-                          "unit"
-                        ]
-                      }
-                    }
-                  },
-                  "required": ["progress", "fusion_entities"]
+                  "$ref": "#/definitions/ResKnowledgeDetailId"
                 }
-              },
-              "required": ["code", "msg", "data"]
+              }
             }
           }
         }
@@ -584,269 +228,80 @@
     }
   },
   "definitions": {
-    "InferRelationParams": {
+    "BusinessCreateParams": {
       "type": "object",
-      "title": "empty object",
+      "title": "title",
       "properties": {
-        "which_graph": {
-          "type": "string"
-        },
-        "infer_alg_type": {
-          "type": "number",
-          "description": "1: 频繁模式挖掘\n2: 不完备知识库关联规则挖掘"
-        },
-        "degree": {
-          "type": "number",
-          "description": "取值: 2,3,4"
-        },
-        "support": {
-          "type": "number",
-          "description": "取值: 0.5,0.6,0.7,0.8,0.9,1.0"
-        },
-        "confidence": {
-          "type": "number",
-          "description": "取值: 0.5,0.6,0.7,0.8,0.9,1.0"
-        }
-      },
-      "required": [
-        "which_graph",
-        "infer_alg_type",
-        "degree",
-        "support",
-        "confidence"
-      ]
-    },
-    "ResInferRelation": {
-      "type": "object",
-      "properties": {
-        "taskid": {
+        "name": {
           "type": "string",
-          "description": "任务id"
+          "title": "业务名称"
+        },
+        "desc": {
+          "type": "string",
+          "title": "业务描述"
+        },
+        "address": {
+          "type": "string",
+          "title": "业务发生地点"
         }
       },
-      "required": ["taskid"]
+      "required": ["name", "desc", "address"]
     },
-    "FusionEntityParams": {
+    "ResBusinessCreate": {
       "type": "object",
-      "title": "empty object",
       "properties": {
-        "which_graph_a": {
+        "id": {
           "type": "string"
-        },
-        "which_graph_b": {
-          "type": "string"
-        },
-        "fusion_alg_type": {
-          "type": "number",
-          "description": "1: 实体指代语义相似度\n2: 实体嵌入表示相似度"
-        },
-        "sim_threshold": {
-          "type": "number",
-          "description": "可传以下数值， 0.5，0.6，0.7，0.8，0.9，1.0"
-        },
-        "fusion_entities": {
+        }
+      },
+      "required": ["id"]
+    },
+    "ResBusinessList": {
+      "type": "object",
+      "properties": {
+        "results": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "entity_label": {
+              "name": {
                 "type": "string"
               },
-              "entity_properties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": ["entity_label", "entity_properties"]
-          }
-        }
-      },
-      "required": [
-        "which_graph_a",
-        "which_graph_b",
-        "fusion_alg_type",
-        "sim_threshold",
-        "fusion_entities"
-      ]
-    },
-    "ResFusionEntity": {
-      "type": "object",
-      "properties": {
-        "taskid": {
-          "type": "string",
-          "description": "任务id"
-        }
-      },
-      "required": ["taskid"]
-    },
-    "FusionGraphParams": {
-      "type": "object",
-      "title": "empty object",
-      "properties": {
-        "taskid": {
-          "type": "string"
-        },
-        "fusion_entities": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "entity_a": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string"
-                  },
-                  "which_graph": {
-                    "type": "string"
-                  },
-                  "property": {
-                    "type": "object",
-                    "properties": {},
-                    "description": "property属性，如: property: { key1: 'value1', key2: 'value2' }"
-                  }
-                },
-                "required": ["name", "code", "which_graph"]
-              },
-              "entity_b": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string"
-                  },
-                  "which_graph": {
-                    "type": "string"
-                  },
-                  "property": {
-                    "type": "object",
-                    "properties": {},
-                    "description": "property属性，如: property: { key1: 'value1', key2: 'value2' }"
-                  }
-                },
-                "required": ["name", "code", "which_graph"]
-              },
-              "fusion_entity": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string"
-                  },
-                  "which_graph": {
-                    "type": "string"
-                  },
-                  "property": {
-                    "type": "object",
-                    "properties": {},
-                    "description": "property属性，如: property: { key1: 'value1', key2: 'value2' }"
-                  }
-                },
-                "required": ["name", "code", "which_graph", "property"]
-              },
-              "is_fusion": {
-                "type": "number",
-                "description": "0：取消融合，1：融合（默认）"
-              }
-            },
-            "required": ["entity_a", "entity_b", "fusion_entity", "is_fusion"]
-          }
-        },
-        "graph_name": {
-          "type": "string"
-        },
-        "which_graph": {
-          "type": "string"
-        }
-      },
-      "required": ["taskid", "fusion_entities", "graph_name", "which_graph"]
-    },
-    "ResFusionGraph": {
-      "type": "object",
-      "properties": {
-        "taskid": {
-          "type": "string",
-          "description": "三元组任务导入id"
-        }
-      },
-      "required": ["taskid"]
-    },
-    "InferGraphParams": {
-      "type": "object",
-      "title": "empty object",
-      "properties": {
-        "taskid": {
-          "type": "string"
-        },
-        "new_relations": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "subject": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string"
-                  },
-                  "which_graph": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  }
-                },
-                "required": ["name", "code", "which_graph", "id"]
-              },
-              "object": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "code": {
-                    "type": "string"
-                  },
-                  "which_graph": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  }
-                },
-                "required": ["name", "code", "which_graph", "id"]
-              },
-              "predict": {
+              "desc": {
                 "type": "string"
               },
-              "is_infer": {
-                "type": "number",
-                "description": "0:  不更新，1：更新"
+              "id": {
+                "type": "string"
               }
-            },
-            "required": ["subject", "object", "predict", "is_infer"]
+            }
           }
         },
-        "graph_name": {
+        "total": {
+          "type": "number"
+        }
+      }
+    },
+    "ResKnowledgeDetailId": {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "string"
         },
-        "which_graph": {
+        "desc": {
           "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            }
+          }
         }
-      },
-      "required": ["taskid", "new_relations", "graph_name", "which_graph"]
+      }
     }
   }
 }

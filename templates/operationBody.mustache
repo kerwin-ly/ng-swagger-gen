@@ -4,5 +4,5 @@
   }}}{{^paramIsLast}},
     {{/paramIsLast}}{{/operationParameters}}{{/operationParamsClass
     }}): __Observable<{{{operationResultType}}}> {
-    return this.http.{{operationLowerMethod}}(`{{{operationPath}}}`{{#operationIsBody}}, {{#operationHasUrlParams}}{ params: root }{{/operationHasUrlParams}}{{^operationHasUrlParams}}root{{/operationHasUrlParams}}{{/operationIsBody}})
+    return this.http.{{operationLowerMethod}}(`{{{operationPath}}}`{{#operationParamsClass}}, { params }{{/operationParamsClass}}{{^operationParamsClass}}, root{{/operationParamsClass}})
   }

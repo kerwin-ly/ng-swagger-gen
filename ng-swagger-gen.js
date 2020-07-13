@@ -177,6 +177,7 @@ function doGenerate(swagger, options) {
   var generateEnumModule = options.enumModule !== false;
 
   // Utility function to render a template and write it to a file
+  console.log("model", model);
   var generate = function (template, model, file) {
     var code = Mustache.render(template, model, templates).replace(
       /[^\S\r\n]+$/gm,
@@ -1341,7 +1342,7 @@ function processServices(swagger, models, options) {
         operationParamsClassComments: paramsClassComments,
         operationLowerMethod: method.toLocaleLowerCase(),
         operationMethod: method.toLocaleUpperCase(),
-        operationPath: url.replace(/\'/g, "\\'").replace(/\{/g, "${"),
+        operationPath: url.replace(/\'/g, "\\'").replace(/\:w+/g, "${$&}"),
         operationPathExpression: toPathExpression(
           operationParameters,
           paramsClass,
@@ -1358,12 +1359,12 @@ function processServices(swagger, models, options) {
       if (modelResult && modelResult.modelIsSimple) {
         actualType = modelResult.modelSimpleType;
       }
-      console.log("param", param);
       operation.operationIsMultipart = isMultipart;
-      operation.operationIsBody = param.paramIn === "body";
       operation.operationHasUrlParams =
         method.toLocaleLowerCase === "get" ||
         method.toLocaleLowerCase === "delete";
+      // operation.operationIsBody = param.paramIn === "body";
+      // operation.operationisQuery = param.paramIn === "query";
       operation.operationIsVoid = actualType === "void";
       operation.operationIsString = actualType === "string";
       operation.operationIsNumber = actualType === "number";
@@ -1445,7 +1446,7 @@ function processServices(swagger, models, options) {
     service.serviceDependencies = dependencies.get();
     service.serviceErrorDependencies = errorDependencies.get();
   }
-  console.log(operation);
+  // console.log(operation);
 
   return services;
 }
