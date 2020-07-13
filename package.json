@@ -5,6 +5,9 @@
   "author": "Cyclos development team",
   "description": "A Swagger 2.0 codegen for Angular",
   "private": false,
+  "scripts": {
+    "dev": "npm link && ng-swagger-gen -i  ./new_swagger.json"
+  },
   "keywords": [
     "angular",
     "swagger",
